@@ -136,18 +136,27 @@ age();*/
 //   let el3 = prompt("Saisir le resultat du candidat n°3");
 //   let el4 = prompt("Saisir le resultat du candidat n°4");
 
-//   if (el1 >= 50) {
-//     //On pose une première condition pour voir si le candidat numero 1 est élu au premier tour
-//     alert("Félicitations! Vous êtes élu au premier tour.");
-//   } else if (el1 >= 12.5 && el1 < 50 && el2<50 && el3<50 && el4<50) {
-//     //Une deuxième condition dans la mesure où il n'est pas élu au premier tour pour voir s'il a le droit de participer au second suffrage au cas où aucun des autres candidats n'aurait obtenu plus de 50%
-//     alert("Vous avez le droit de participer au second tour");
-//   } else if (el1 >= 12.5 && el1 < 50 || el2>50 || el3>50 || el4>50) {
-//     //Une troisième condition dans la mesure où il n'est pas élu au premier tour et qu'un autre candidat aurait obtenu + de 50%
-//     alert("Mince! C'est pas votre chance. Une prochaine peut-être");
+//   let total = el1 + el2 + el3 + el4;
+
+//   //On vérifie d'abord si la somme des résultats n'est pas supérieur à 100%
+//   if (total < 100) {
+//     if (el1 >= 50) {
+//       //On pose une première condition pour voir si le candidat numero 1 est élu au premier tour
+//       alert("Félicitations! Vous êtes élu au premier tour.");
+//     } else if (el1 >= 12.5 && el1 < 50 && el2 < 50 && el3 < 50 && el4 < 50) {
+//       //Une deuxième condition dans la mesure où il n'est pas élu au premier tour pour voir s'il a le droit de participer au second suffrage au cas où aucun des autres candidats n'aurait obtenu plus de 50%
+//       alert("Vous avez le droit de participer au second tour");
+//     } else if (el1 >= 12.5 && el1 < 50 || el2 > 50 || el3 > 50 || el4 > 50) {
+//       //Une troisième condition dans la mesure où il n'est pas élu au premier tour et qu'un autre candidat aurait obtenu + de 50%
+//       alert("Mince! C'est pas votre chance. Une prochaine peut-être");
+//     } else {
+//       //On boucle la condition s'il ne rentre dans aucune des condition précédente
+//       alert("Mince! C'est pas votre chance. Une prochaine peut-être");
+//     }
 //   } else {
-//     //On boucle la condition s'il ne rentre dans aucune des condition précédente
-//     alert("Mince! C'est pas votre chance. Une prochaine peut-être");
+//     // Dans le cas où la somme des résultats dépassera 100%
+//     console.log("Les éléctions sont truquées");
+
 //   }
 // }
 // //On appelle notre fonction pour tester
@@ -162,27 +171,114 @@ age();*/
 // Ecrire l'algorithme permettant de saisir les données nécessaires (sans contrôle de saisie) et de traiter ce problème. Avant de se lancer à corps perdu dans cet exercice, on pourra réfléchir un peu et s'apercevoir qu'il est plus simple qu'il n'en a l'air (cela s'appelle faire une analyse !)
 
 function assu() {
+  //On crée nos variable pour vérifier l'âge, l'ancienneté du permis et le nombre d'accident qu'il a eu. En fonction de ce qu'il renseigne on verra à quel tarif d'assurance il  a droit, ou s'il ne peut pas être assurer.
   let age = prompt("Saisissez votre age");
   let dtePermis = prompt("Combien d'année de permis avez-vous ?");
   let accident = prompt("Combien d'accident avez-vous déjà eu?");
+  let anciennete = prompt("Combien d'années d'ancienneté avez vous chez nous ?");
 
   if (
+    //On pose les conditions dans lesquelles il aura droit à un tarif ROUGE.
     (age < 25 && dtePermis < 2 && accident == 0) ||
     (age < 25 && dtePermis >= 2 && accident >= 1) ||
     (age >= 25 && dtePermis < 2 && accident >= 1) ||
     (age >= 25 && dtePermis >= 2 && accident >= 2)
   ) {
-    alert("Vous avez droit à un tarif ROUGE");
+    if (anciennete > 1) {
+      alert("Bravo! Vous avez droit à un tarif BLEU.")
+    } else {
+      alert("Vous avez droit à un tarif ROUGE");
+    }
   } else if (
+    //On pose les conditions dans lesquelles il aura droit à un tarif ORANGE.
     (age < 25 && dtePermis >= 2 && accident == 0) ||
     (age >= 25 && dtePermis < 2 && accident == 0) ||
     (age >= 25 && dtePermis >= 2 && accident >= 1)
   ) {
-    alert("Vous avez droit à un tarif ORANGE");
+    if (anciennete > 1) {
+      alert("Bravo! Vous avez droit à un tarif BLEU.")
+    } else {
+      alert("Vous avez droit à un tarif ORANGE");
+    }
+    //On pose la condition dans laquelle il aura droit à un tarif VERT.
   } else if (age >= 25 && dtePermis >= 2 && accident == 0) {
-    alert("Vous avez droit à un tarif VERT");
-  }else {
+    if (anciennete > 1) {
+      alert("Bravo! Vous avez droit à un tarif BLEU.")
+    } else {
+      alert("Vous avez droit à un tarif VERT");
+    }
+  } else {
+    //On boucle notre condition; s'il ne rentre dans aucune des conditions précédentes alors il ne peut pas être assuré.
     alert("Désolé, nous ne pouvons pas vous assurez")
   }
 }
 assu();
+
+
+// Exercice 7:
+// Ecrivez un algorithme qui, après avoir demandé un numéro de jour, de mois et d'année à l'utilisateur, renvoie s'il s'agit ou non d'une date valide.
+// Cet exercice est certes d’un manque d’originalité affligeant, mais après tout, en algorithmique comme ailleurs, il faut connaître ses classiques ! Et quand on a fait cela une fois dans sa vie, on apprécie pleinement l’existence d’un type numérique « date » dans certains langages…).
+// Il n'est sans doute pas inutile de rappeler rapidement que le mois de février compte 28 jours, sauf si l’année est bissextile, auquel cas il en compte 29. L’année est bissextile si elle est divisible par quatre. Toutefois, les années divisibles par 100 ne sont pas bissextiles, mais les années divisibles par 400 le sont. Ouf !
+// Un dernier petit détail : vous ne savez pas, pour l’instant, exprimer correctement en pseudo-code l’idée qu’un nombre A est divisible par un nombre B. Aussi, vous vous contenterez d’écrire en bons télégraphistes que A divisible par B se dit « A dp B » (le fameux modulo).
+
+// function dteValide(_jour, _mois, _annee) {
+//   //Vérification du mois
+//   if (mois < 1 || mois > 12) {
+//     return false;
+//   }
+
+//   //Déterminer le nombre de jours qu'il y a dans le mois que j'ai saisi
+//   let jourParMois;
+//   if (mois == 2) {
+//     //Février avec gestion des années bissextiles
+//     if (annBxt(annee) == true) {
+//       jourParMois = 29;
+//     } else {
+//       jourParMois = 28;
+//     }
+//   } else if (mois == 4 || mois == 6 || mois == 9 || mois == 11) {
+//     //mois d'avril, juin, septembre et novembre
+//     jourParMois = 30;
+//   } else {
+//     //Tous les autres mois
+//     jourParMois = 31;
+//   }
+
+//   if (_jour>=1 && _jour<=jourParMois) {
+//     return true;
+//   } else{
+//     return false;
+//   }
+
+// }
+
+// function annBxt(_annee) {
+//   //Une année est bissextile si elle est divisible par 4 mais pas par 100
+//   //Sauf si elle est divisible par 400
+//   if ((annee % 4 == 0 && annee % 100 != 0) || annee % 400 == 0) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+
+// let jour = parseInt(prompt("Saisir un jour"));
+// let mois = parseInt(prompt("Saisir un mois"));
+// let annee = parseInt(prompt("Saisir une annee"));
+
+// if (dteValide(jour, mois, annee) == true) {
+//   alert("La date saisie est valide")
+// } else {
+//   alert("La date saisie n'est pas valide")
+// }
+
+
+//Exercice 12 :
+//Ecrivez un algorithme constituant un tableau, à partir de deux tableaux de même longueur préalablement saisis. le nouveau tableau sera la somme des éléments des deux tableaux de départs.
+
+// const monTbl1 = [4, 8, 7, 9, 1, 5, 4, 6];
+// const monTbl2 = [7, 6, 5, 2, 1, 3, 7, 4];
+
+// const monTbl3 = monTbl1.map(monTbl2);
+
+// console.log(monTbl3);
